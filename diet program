@@ -1,0 +1,35 @@
+from fpdf import FPDF
+
+class PDF(FPDF):
+    def header(self):
+        self.set_font("Arial", "B", 12)
+        self.cell(0, 10, "Εβδομαδιαίο Πρόγραμμα Διατροφής & Αγοραστική Λίστα", ln=True, align="C")
+        self.ln(5)
+
+    def chapter_title(self, title):
+        self.set_font("Arial", "B", 12)
+        self.set_fill_color(200, 220, 255)
+        self.cell(0, 10, title, 0, 1, 'L', 1)
+        self.ln(2)
+
+    def chapter_body(self, body):
+        self.set_font("Arial", "", 11)
+        self.multi_cell(0, 8, body)
+        self.ln()
+
+diet_plan = """
+[Εδώ βάλε το εβδομαδιαίο πλάνο που σου έδωσα παραπάνω...]
+"""
+
+shopping_list = """
+[Και εδώ βάλε την αγοραστική λίστα...]
+"""
+
+pdf = PDF()
+pdf.add_page()
+pdf.chapter_title("Εβδομαδιαίο Πρόγραμμα Διατροφής")
+pdf.chapter_body(diet_plan)
+pdf.chapter_title("Αγοραστική Λίστα")
+pdf.chapter_body(shopping_list)
+
+pdf.output("Διατροφή_και_Λίστα_Αγορών.pdf")
